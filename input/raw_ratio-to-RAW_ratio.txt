@@ -3,3 +3,4 @@ nano/lib/numbers.hpp
 nano/rpc_test/rpc.cpp
 nano/lib/numbers.hpp
 nano/core_test/bucketing.cpp
+nano/core_test/numbers.cpp

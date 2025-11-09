@@ -1120,6 +1120,10 @@ do
   mv bandaid_build/$p.awk bandaid_build/$p;
 done < input/kRAW-to-banoshi.txt
 
+#nano/core_test/
+truncate -s -1 bandaid_build/nano/core_test/backlog.cpp;
+truncate -s -1 bandaid_build/nano/core_test/numbers.cpp;
+
 ### diff the two directories.
 diff -r bandaid_build banano_build | head -n 50;
 

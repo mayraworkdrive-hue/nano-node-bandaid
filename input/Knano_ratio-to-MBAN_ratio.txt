@@ -24,3 +24,7 @@ nano/core_test/ledger_confirm.cpp
 nano/core_test/scheduler_buckets.cpp
 nano/slow_test/flamegraph.cpp
 nano/core_test/backlog.cpp
+nano/core_test/bucketing.cpp
+nano/core_test/fork_cache.cpp
+nano/core_test/online_reps.cpp
+nano/core_test/numbers.cpp
