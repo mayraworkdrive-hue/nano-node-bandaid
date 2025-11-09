@@ -15,3 +15,9 @@ nano/core_test/scheduler_buckets.cpp
 nano/node/monitor.cpp
 nano/node/nodeconfig.hpp
 nano/node/online_reps.cpp
+nano/core_test/bucketing.cpp
+nano/core_test/numbers.cpp
+nano/core_test/numbers.cpp
+nano/core_test/online_reps.cpp
+nano/qt/qt.cpp
+nano/secure/ledger.cpp
