@@ -1,7 +1,5 @@
 nano/core_test/network_filter.cpp
-nano/core_test/uint256_union.cpp
 nano/lib/numbers.hpp
-nano/qt/qt.cpp
 nano/rpc_test/rpc.cpp
 nano/lib/numbers.hpp
-nano/node/nodeconfig.hpp
+nano/core_test/bucketing.cpp

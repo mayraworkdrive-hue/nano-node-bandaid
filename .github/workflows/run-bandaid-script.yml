@@ -1,0 +1,48 @@
+name: Run bandaid.sh
+
+on:
+  push:
+    branches:
+      - '**'
+  workflow_dispatch:
+
+jobs:
+  run-bandaid:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: ⬇️ Checkout Current Repository Code
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Determine Clone URL and Owner
+        run: |
+          REPO_OWNER="${{ github.repository_owner }}"
+          echo "BANANO_CLONE_OWNER=$REPO_OWNER" >> $GITHUB_ENV
+          echo "Using repo owner: $REPO_OWNER"
+        shell: bash
+
+      - name: ⬇️ Clone Banano Repository (Context-Sensitive)
+        run: |
+          # Use the environment variable set in the previous step
+          CLONE_URL="https://github.com/${{ env.BANANO_CLONE_OWNER }}/banano.git"
+          
+          git clone \
+            -c advice.detachedHead=false \
+            --depth 1 \
+            --branch releases/v28 \
+            $CLONE_URL \
+            banano_build
+        shell: bash
+
+      - name: 👀 Verify banano_build Location
+        run: |
+          echo "Current working directory is: $(pwd)"
+          echo "Listing contents of banano_build:"
+          ls -F banano_build/
+        shell: bash
+        
+      - name: ⚙️ Make Local Script Executable
+        run: chmod +x bandaid.sh
+
+      - name: 🏃 Run Local bandaid.sh Script
+        run: ./bandaid.sh
