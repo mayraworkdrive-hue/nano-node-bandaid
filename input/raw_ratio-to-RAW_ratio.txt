@@ -4,3 +4,5 @@ nano/rpc_test/rpc.cpp
 nano/lib/numbers.hpp
 nano/core_test/bucketing.cpp
 nano/core_test/numbers.cpp
+nano/qt_test/qt.cpp
+nano/slow_test/flamegraph.cpp
