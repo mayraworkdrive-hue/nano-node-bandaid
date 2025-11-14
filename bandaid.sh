@@ -18,7 +18,7 @@ then
   # rm -rf banano_build;
   rm -rf nano_build;
   # git clone -c advice.detachedHead=false --depth 1 --branch releases/v28 https://github.com//${{ github.repository_owner }}banano.git banano_build;
-  git clone -c advice.detachedHead=false --depth 1 --branch releases/v28 https://github.com/nanocurrency/nano-node.git nano_build;
+  git clone -c advice.detachedHead=false --depth 1 --branch releases/v29 https://github.com/nanocurrency/nano-node.git nano_build;
 elif [ $check_type = "local" ]
 then
   echo "comparing local"
