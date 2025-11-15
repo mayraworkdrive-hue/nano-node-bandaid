@@ -1,0 +1,4 @@
+CMakeLists.txt
+nano/lib/config.cpp
+nano/slow_test/bootstrap.cpp
+nano/secure/common.cpp

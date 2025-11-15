@@ -2,27 +2,13 @@
 
 a utility for updating the nano code with the standard banano changes.
 
-## usage of converter
+## running bandaid
 
-1. clone https://github.com/nanocurrency/nano-node.git into your own repo.
+1. the github action will fail if the diff fails.
 
-2. git clone your repo into <coinPrefix>ano_build
+2. to run locally, run bandaid-test.sh
 
-    git clone --branch develop https://github.com/coranos/nulnode.git nulano_build;
-
-3. set coinPrivateKey and coinPrefixCamelCase to something other than ban.
-    try
-      coinPrivateKey = '0000000000000000000000000000000000000000000000000000000000000000';
-    and
-      coinPrefixCamelCase = 'Nul';
-
-4. run:
-
-    npm start;
-
-5. check in the code that was changed.
-
-## usage of bandaid
+## fixing bandaid
 
 1.  edit ./bandaid.sh to have the correct build info based on nano and banano latest builds
 

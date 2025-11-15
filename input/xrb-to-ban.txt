@@ -1,0 +1,4 @@
+nano/core_test/wallet.cpp
+nano/core_test/websocket.cpp
+nano/lib/numbers.cpp
+nano/secure/common.cpp

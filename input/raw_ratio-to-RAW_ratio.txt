@@ -6,3 +6,5 @@ nano/core_test/bucketing.cpp
 nano/core_test/numbers.cpp
 nano/qt_test/qt.cpp
 nano/slow_test/flamegraph.cpp
+nano/node/node.cpp
+nano/qt/qt.cpp

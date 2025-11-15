@@ -1,0 +1,12 @@
+nanocurrency.spec.in
+CMakeLists.txt
+ci/test.sh
+coverage/CMakeLists.txt
+etc/systemd/nanocurrency-test.service
+etc/systemd/nanocurrency.service
+etc/systemd/nanocurrency-beta.service
+nano/nano_node/CMakeLists.txt
+nanocurrency-beta.spec.in
+systest/cli_wallet_create.sh
+systest/node_initialize.sh
+systest/set_bandwidth_params.sh.disabled

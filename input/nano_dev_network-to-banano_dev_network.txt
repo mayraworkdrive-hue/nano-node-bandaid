@@ -1,0 +1,6 @@
+CMakeLists.txt
+ci/build-ci.sh
+nano/core_test/telemetry.cpp
+nano/lib/config.cpp
+nano/nano_node/entry.cpp
+nano/secure/common.cpp

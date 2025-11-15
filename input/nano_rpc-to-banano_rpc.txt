@@ -1,0 +1,6 @@
+nanocurrency.spec.in
+CMakeLists.txt
+coverage/CMakeLists.txt
+nano/core_test/toml.cpp
+nano/lib/rpcconfig.cpp
+nano/nano_rpc/CMakeLists.txt

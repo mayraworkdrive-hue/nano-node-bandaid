@@ -1,0 +1,11 @@
+nanocurrency.spec.in
+CMakeLists.txt
+ci/actions/linux/install_deps.sh
+ci/build-rhel.sh
+debian-control/postinst.in
+etc/systemd/nanocurrency-beta.service
+etc/systemd/nanocurrency-test.service
+etc/systemd/nanocurrency.service
+nanocurrency-beta.spec.in
+util/build_prep/common.sh
+ci/actions/deploy.sh
