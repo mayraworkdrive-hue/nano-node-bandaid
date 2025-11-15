@@ -1,4 +1,3 @@
-
 #.gitignore
 awk  'NR==33 || NR==34 { sub("nano_node", "bananode") }; { print $0 }' bandaid_build/.gitignore > bandaid_build/.gitignore.awk
 mv bandaid_build/.gitignore.awk bandaid_build/.gitignore;
@@ -160,22 +159,10 @@ awk  'NR==826 { sub(">", ">=") }; { print $0 }' bandaid_build/nano/lib/numbers.c
 mv bandaid_build/nano/lib/numbers.cpp.awk bandaid_build/nano/lib/numbers.cpp;
 
 #nano/lib/numbers.hpp
-awk  'NR==17 { sub("Gxrb_ratio = nano::uint128_t \\(\"1000000000000000000000000000000000\"\\); // 10\\^33", "MBAN_ratio = nano::uint128_t (\"100000000000000000000000000000000000\"); // 10^35 = 1 million banano") }; { print $0 }' bandaid_build/nano/lib/numbers.hpp > bandaid_build/nano/lib/numbers.hpp.awk
-mv bandaid_build/nano/lib/numbers.hpp.awk bandaid_build/nano/lib/numbers.hpp;
-
-awk  'NR==18 { sub("Mxrb_ratio = nano::uint128_t \\(\"1000000000000000000000000000000\"\\); // 10\\^30", "BAN_ratio = nano::uint128_t (\"100000000000000000000000000000\"); // 10^29 = 1 banano") }; { print $0 }' bandaid_build/nano/lib/numbers.hpp > bandaid_build/nano/lib/numbers.hpp.awk
-mv bandaid_build/nano/lib/numbers.hpp.awk bandaid_build/nano/lib/numbers.hpp;
-
-awk  'NR==19 { sub("kxrb_ratio = nano::uint128_t \\(\"1000000000000000000000000000\"\\); // 10\\^27", "banoshi_ratio = nano::uint128_t (\"1000000000000000000000000000\"); // 10^27 = 1 hundredth banano") }; { print $0 }' bandaid_build/nano/lib/numbers.hpp > bandaid_build/nano/lib/numbers.hpp.awk
-mv bandaid_build/nano/lib/numbers.hpp.awk bandaid_build/nano/lib/numbers.hpp;
-
-awk  'NR==20 { sub("nano::uint128_t \\(\"1000000000000000000000000\"\\); // 10\\^24", "nano::uint128_t (\"1\"); // 10^0") }; { print $0 }' bandaid_build/nano/lib/numbers.hpp > bandaid_build/nano/lib/numbers.hpp.awk
-mv bandaid_build/nano/lib/numbers.hpp.awk bandaid_build/nano/lib/numbers.hpp;
-
-sed -n '1,24p' bandaid_build/nano/lib/numbers.hpp > bandaid_build/nano/lib/numbers.hpp.sed;
+sed -n '1,22p' bandaid_build/nano/lib/numbers.hpp > bandaid_build/nano/lib/numbers.hpp.sed;
 # echo '// INSERT HERE' >> bandaid_build/nano/lib/numbers.hpp.sed;
-sed -n '25,25p' banano_build/nano/lib/numbers.hpp >> bandaid_build/nano/lib/numbers.hpp.sed;
-sed '1,24d' bandaid_build/nano/lib/numbers.hpp >> bandaid_build/nano/lib/numbers.hpp.sed;
+sed -n '23,26p' banano_build/nano/lib/numbers.hpp >> bandaid_build/nano/lib/numbers.hpp.sed;
+sed '1,25d' bandaid_build/nano/lib/numbers.hpp >> bandaid_build/nano/lib/numbers.hpp.sed;
 mv bandaid_build/nano/lib/numbers.hpp.sed bandaid_build/nano/lib/numbers.hpp;
 
 #nano/nano_node/CMakeLists.txt
@@ -587,3 +574,37 @@ mv bandaid_build/nano/secure/utility.cpp.awk bandaid_build/nano/secure/utility.c
 #nano/slow_test/flamegraph.cpp
 awk  'NR==46 || NR==86 { sub("xrb_ratio", "raw_ratio") }; { print $0 }' bandaid_build/nano/slow_test/flamegraph.cpp > bandaid_build/nano/slow_test/flamegraph.cpp.awk
 mv bandaid_build/nano/slow_test/flamegraph.cpp.awk bandaid_build/nano/slow_test/flamegraph.cpp;
+
+#nano_rpc-to-banano_rpc.txt
+while IFS="" read -r p || [ -n "$p" ]
+do
+  printf 'nano_rpc-to-banano_rpc %s\n' "$p"
+  awk  '{ gsub("nano_rpc", "banano_rpc") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
+  mv bandaid_build/$p.awk bandaid_build/$p;
+done < input/nano_rpc-to-banano_rpc.txt
+
+#nano_node-to-bananode.txt
+while IFS="" read -r p || [ -n "$p" ]
+do
+  printf 'nano_node-to-bananode %s\n' "$p"
+  awk  '{ gsub("nano_node", "bananode") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
+  mv bandaid_build/$p.awk bandaid_build/$p;
+done < input/nano_node-to-bananode.txt
+
+#xrb-to-ban.txt
+while IFS="" read -r p || [ -n "$p" ]
+do
+  printf 'xrb-to-ban %s\n' "$p"
+  sed -E 's/(^|[^K])xrb/\1ban/g' bandaid_build/$p > bandaid_build/$p.awk
+  mv bandaid_build/$p.awk bandaid_build/$p;
+done < input/xrb-to-ban.txt
+
+#nano_ratio-to-BAN_ratio.txt
+while IFS="" read -r p || [ -n "$p" ]
+do
+  printf 'nano_ratio-to-BAN_ratio %s\n' "$p"
+  sed -E 's/(^|[^K])nano_ratio/\1BAN_ratio/g' bandaid_build/$p > bandaid_build/$p.awk
+  # awk  '{ gsub(/[^K]nano_ratio/, "BAN_ratio") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
+  # awk  '{ gsub("nano_ratio", "BAN_ratio") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
+  mv bandaid_build/$p.awk bandaid_build/$p;
+done < input/nano_ratio-to-BAN_ratio.txt

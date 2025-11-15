@@ -6,14 +6,6 @@ do
   mv bandaid_build/$p.awk bandaid_build/$p;
 done < input/Knano_ratio-to-MBAN_ratio.txt
 
-#nano_ratio-to-BAN_ratio.txt
-while IFS="" read -r p || [ -n "$p" ]
-do
-  printf 'nano_ratio-to-BAN_ratio %s\n' "$p"
-  awk  '{ gsub("nano_ratio", "BAN_ratio") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
-  mv bandaid_build/$p.awk bandaid_build/$p;
-done < input/nano_ratio-to-BAN_ratio.txt
-
 #xrb_ratio-to-RAW_ratio.txt
 while IFS="" read -r p || [ -n "$p" ]
 do
@@ -53,23 +45,6 @@ do
   awk  '{ gsub("Nano", "Banano") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
   mv bandaid_build/$p.awk bandaid_build/$p;
 done < input/Nano-to-Banano.txt
-
-#nano_rpc-to-banano_rpc.txt
-while IFS="" read -r p || [ -n "$p" ]
-do
-  printf 'nano_rpc-to-banano_rpc %s\n' "$p"
-  awk  '{ gsub("nano_rpc", "banano_rpc") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
-  mv bandaid_build/$p.awk bandaid_build/$p;
-done < input/nano_rpc-to-banano_rpc.txt
-
-#nano_node-to-bananode.txt
-# with a space prefix
-while IFS="" read -r p || [ -n "$p" ]
-do
-  printf 'nano_node-to-bananode %s\n' "$p"
-  awk  '{ gsub("nano_node", "bananode") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
-  mv bandaid_build/$p.awk bandaid_build/$p;
-done < input/nano_node-to-bananode.txt
 
 #Nano_Currency-to-Bananocoin.txt
 while IFS="" read -r p || [ -n "$p" ]
@@ -139,14 +114,6 @@ do
   mv bandaid_build/$p.awk bandaid_build/$p;
 done < input/nano_-to-banano_.txt
 
-#xrb-to-ban.txt
-while IFS="" read -r p || [ -n "$p" ]
-do
-  printf 'xrb-to-ban %s\n' "$p"
-  awk  '{ gsub("xrb", "ban") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
-  mv bandaid_build/$p.awk bandaid_build/$p;
-done < input/xrb-to-ban.txt
-
 # buggy conversions
 printf 'undoing buggy conversions\n'
 
@@ -202,3 +169,4 @@ mv bandaid_build/nano/core_test/block.cpp.awk bandaid_build/nano/core_test/block
 #nano/core_test/
 truncate -s -1 bandaid_build/nano/core_test/backlog.cpp;
 truncate -s -1 bandaid_build/nano/core_test/numbers.cpp;
+truncate -s -1 banano_build/nano/node/monitor.cpp;

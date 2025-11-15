@@ -76,6 +76,8 @@ cp banano_build/record_rep_weights.py bandaid_build/record_rep_weights.py
 printf 'doing diff\n'
 
 ### diff the two directories.
+diff -qr bandaid_build banano_build;
+
 diff -r bandaid_build banano_build | head -n 50;
 
 ### print line count

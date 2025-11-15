@@ -26,6 +26,6 @@ echo "Grandparent Name (Value for env var): $GRANDPARENT_NAME"
 echo "GITHUB_REPOSITORY_OWNER is now set to: $GITHUB_REPOSITORY_OWNER"
 
 rm -rf banano_build;
-git clone -c advice.detachedHead=false --depth 1 --branch releases/v28 https://github.com//$GITHUB_REPOSITORY_OWNER/banano.git banano_build;
+git clone -c advice.detachedHead=false --depth 1 --branch features/v28 https://github.com//$GITHUB_REPOSITORY_OWNER/banano.git banano_build;
 
 ./bandaid.sh
