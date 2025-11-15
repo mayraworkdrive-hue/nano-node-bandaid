@@ -69,11 +69,28 @@ cp banano_build/nano/lib/convert.hpp bandaid_build/nano/lib/convert.hpp;
 cp banano_build/nano/node/bootstrap_weights_live.hpp bandaid_build/nano/node/bootstrap_weights_live.hpp
 cp banano_build/record_rep_weights.py bandaid_build/record_rep_weights.py
 
+# start git checkpoints
+cd bandaid_build;
+git init;
+git checkout -b main;
+cd ..;
+# start git checkpoints
+
+# git checkpoint
+cd bandaid_build;
+git add .;
+git commit -m "Initial commit";
+cd ..;
+# git checkpoint
+
 ./banano-specific-code.sh
 
 ./banano-renaming.sh
 
 printf 'doing diff\n'
+
+### remove .git for diff
+rm -rf bandaid_build/.git;
 
 ### diff the two directories.
 diff -qr bandaid_build banano_build;
