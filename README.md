@@ -29,3 +29,13 @@ a utility for updating the nano code with the standard banano changes.
 6.  resume building banano from source 'make bananode'
 
 7.  check in the new source code.
+
+## making a new rebase branch
+
+    git checkout master;
+    git branch -D rebase/v28;
+    git checkout --orphan rebase/v28;
+    git rm -rf .;
+    git commit --allow-empty -m "Initial commit for blank branch"
+    git branch
+    git merge nano-node/releases/v28 --allow-unrelated-histories
