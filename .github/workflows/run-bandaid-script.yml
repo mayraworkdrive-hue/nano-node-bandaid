@@ -30,11 +30,12 @@ jobs:
         run: |
           # Use the environment variable set in the previous step
           CLONE_URL="https://github.com/${{ env.BANANO_CLONE_OWNER }}/banano.git"
+          TARGET_BRANCH="${{ github.ref_name }}"
           
           git clone \
             -c advice.detachedHead=false \
             --depth 1 \
-            --branch releases/v28 \
+            --branch $TARGET_BRANCH \
             $CLONE_URL \
             banano_build
         shell: bash
