@@ -1,9 +1,9 @@
 name: Cleanup Old Workflow Runs
 
 on:
-  schedule:
-    # Runs every Monday at 00:00 UTC
-    - cron: '0 0 * * 1'
+  push:
+    branches:
+      - '**'
   workflow_dispatch:
     # Allows manual triggering from the Actions tab
     inputs:
