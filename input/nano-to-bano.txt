@@ -1,1 +1,4 @@
+nano/core_test/toml.cpp
+nano/rpc_test/rpc.cpp
+nano/node/bootstrap_weights_live.hpp
 nano/core_test/numbers.cpp
