@@ -3,3 +3,4 @@ nano/core_test/websocket.cpp
 nano/lib/numbers.cpp
 nano/secure/common.cpp
 nano/core_test/block.cpp
+nano/core_test/numbers.cpp

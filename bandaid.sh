@@ -33,6 +33,9 @@ rm nano_build/nano/nano_wallet/.DS_Store;
 
 cp -r nano_build bandaid_build;
 
+./list_submodules.sh ./banano_build ./banano_build/submodules.txt
+./list_submodules.sh ./bandaid_build ./bandaid_build/submodules.txt
+
 rm -rf banano_build/.git;
 rm -rf bandaid_build/.git;
 rm -rf banano_build/.github;
