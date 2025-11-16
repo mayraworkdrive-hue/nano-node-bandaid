@@ -642,6 +642,21 @@ git commit -m "nano_node-to-bananode";
 cd ..;
 # git checkpoint
 
+#nano-to-bano.txt
+while IFS="" read -r p || [ -n "$p" ]
+do
+  printf 'nano-to-bano %s\n' "$p"
+  sed -E 's/\"nano/\"bano/g' bandaid_build/$p > bandaid_build/$p.awk
+  mv bandaid_build/$p.awk bandaid_build/$p;
+done < input/nano-to-bano.txt
+
+# git checkpoint
+cd bandaid_build;
+git add .;
+git commit -m "nano-to-bano";
+cd ..;
+# git checkpoint
+
 #xrb-to-ban.txt
 while IFS="" read -r p || [ -n "$p" ]
 do
