@@ -31,6 +31,8 @@ cd ..;
 #nano/core_test/
 truncate -s -1 bandaid_build/nano/core_test/backlog.cpp;
 truncate -s -1 bandaid_build/nano/core_test/numbers.cpp;
+sed -i -e '$a\' -e '' banano_build/nano/node/monitor.cpp;
+sed -i -e '$a\' -e '' bandaid_build/nano/node/monitor.cpp;
 
 # git checkpoint
 cd bandaid_build;
