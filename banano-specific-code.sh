@@ -45,7 +45,7 @@ mv bandaid_build/ci/actions/deploy.sh.sed bandaid_build/ci/actions/deploy.sh;
 # # CMakeLists.txt
 sed -n '1,158p' bandaid_build/CMakeLists.txt > bandaid_build/CMakeLists.txt.sed;
 # echo '// BEGIN INSERT HERE' >> bandaid_build/CMakeLists.txt.sed;
-sed -n '159,179p' banano_build/CMakeLists.txt >> bandaid_build/CMakeLists.txt.sed;
+sed -n '159,180p' banano_build/CMakeLists.txt >> bandaid_build/CMakeLists.txt.sed;
 # echo '// END INSERT HERE' >> bandaid_build/CMakeLists.txt.sed;
 sed '1,161d' bandaid_build/CMakeLists.txt >> bandaid_build/CMakeLists.txt.sed;
 mv bandaid_build/CMakeLists.txt.sed bandaid_build/CMakeLists.txt;
@@ -106,17 +106,181 @@ if [ $EXIT_CODE_1 -ne 0 ]; then
     exit $EXIT_CODE_1
 fi
 
-#nano/core_test/numbers.cpp
+#nano/lib/numbers.cpp
+search_replace_check \
+  bandaid_build/nano/lib/numbers.cpp \
+  "auto error (source_a.size () < 5);" \
+  "auto error (source_a.size () < 4);" \
+  1
+EXIT_CODE_1=$?
+if [ $EXIT_CODE_1 -ne 0 ]; then
+    echo "❌ Call FAILED (Exit Code: $EXIT_CODE_1). Exiting script immediately." >&2
+    exit $EXIT_CODE_1
+fi
+
+sed -n '1,112p' bandaid_build/nano/lib/numbers.cpp > bandaid_build/nano/lib/numbers.cpp.sed;
+# echo '// BEGIN INSERT HERE' >> bandaid_build/nano/lib/numbers.cpp.sed;
+sed -n '113,119p' banano_build/nano/lib/numbers.cpp >> bandaid_build/nano/lib/numbers.cpp.sed;
+# echo '// END INSERT HERE' >> bandaid_build/nano/lib/numbers.cpp.sed;
+sed '1,120d' bandaid_build/nano/lib/numbers.cpp >> bandaid_build/nano/lib/numbers.cpp.sed;
+mv bandaid_build/nano/lib/numbers.cpp.sed bandaid_build/nano/lib/numbers.cpp;
+
+search_replace_check \
+  bandaid_build/nano/lib/numbers.cpp \
+  "debug_assert (difficulty_a > 0);" \
+  "debug_assert (difficulty_a >= 0);" \
+  1
+EXIT_CODE_1=$?
+if [ $EXIT_CODE_1 -ne 0 ]; then
+    echo "❌ Call FAILED (Exit Code: $EXIT_CODE_1). Exiting script immediately." >&2
+    exit $EXIT_CODE_1
+fi
+
+#nano/node/nodeconfig.hpp
 # search_replace_check \
-#   bandaid_build/nano/core_test/numbers.cpp \
-#   "bano_1111111111111111111111111111111111111111111111111111hifc8npp" \
-#   "ban_1111111111111111111111111111111111111111111111111111hifc8npp" \
+#   bandaid_build/nano/node/nodeconfig.hpp \
+#   "8076" \
+#   "8076" \
 #   1
 # EXIT_CODE_1=$?
 # if [ $EXIT_CODE_1 -ne 0 ]; then
 #     echo "❌ Call FAILED (Exit Code: $EXIT_CODE_1). Exiting script immediately." >&2
 #     exit $EXIT_CODE_1
 # fi
+
+search_replace_check \
+  bandaid_build/nano/node/nodeconfig.hpp \
+  "60000 \* nano::MBAN_ratio" \
+  "900 * nano::MBAN_ratio" \
+  1
+EXIT_CODE_1=$?
+if [ $EXIT_CODE_1 -ne 0 ]; then
+    echo "❌ Call FAILED (Exit Code: $EXIT_CODE_1). Exiting script immediately." >&2
+    exit $EXIT_CODE_1
+fi
+
+search_replace_check \
+  bandaid_build/nano/node/nodeconfig.hpp \
+  "60 million nano" \
+  "900 million banano" \
+  1
+EXIT_CODE_1=$?
+if [ $EXIT_CODE_1 -ne 0 ]; then
+    echo "❌ Call FAILED (Exit Code: $EXIT_CODE_1). Exiting script immediately." >&2
+    exit $EXIT_CODE_1
+fi
+
+search_replace_check \
+  bandaid_build/nano/node/nodeconfig.hpp \
+  "0.000001 nano" \
+  "0.000001 banano" \
+  1
+EXIT_CODE_1=$?
+if [ $EXIT_CODE_1 -ne 0 ]; then
+    echo "❌ Call FAILED (Exit Code: $EXIT_CODE_1). Exiting script immediately." >&2
+    exit $EXIT_CODE_1
+fi
+
+search_replace_check \
+  bandaid_build/nano/node/nodeconfig.hpp \
+  "1000 nano" \
+  "1000 banano" \
+  1
+EXIT_CODE_1=$?
+if [ $EXIT_CODE_1 -ne 0 ]; then
+    echo "❌ Call FAILED (Exit Code: $EXIT_CODE_1). Exiting script immediately." >&2
+    exit $EXIT_CODE_1
+fi
+
+
+#nano/rpc_test/rpc.cpp
+search_replace_check \
+  bandaid_build/nano/rpc_test/rpc.cpp \
+  "ban_to_raw" \
+  "nano_to_raw" \
+  1
+EXIT_CODE_1=$?
+if [ $EXIT_CODE_1 -ne 0 ]; then
+    echo "❌ Call FAILED (Exit Code: $EXIT_CODE_1). Exiting script immediately." >&2
+    exit $EXIT_CODE_1
+fi
+search_replace_check \
+  bandaid_build/nano/rpc_test/rpc.cpp \
+  "the nano_ address checksum is wrong" \
+  "the ban_ address checksum is wrong" \
+  1
+EXIT_CODE_1=$?
+if [ $EXIT_CODE_1 -ne 0 ]; then
+    echo "❌ Call FAILED (Exit Code: $EXIT_CODE_1). Exiting script immediately." >&2
+    exit $EXIT_CODE_1
+fi
+
+#nano/secure/common.cpp
+search_replace_check \
+  bandaid_build/nano/secure/common.cpp \
+  "ban_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3" \
+  "ban_1bananobh5rat99qfgt1ptpieie5swmoth87thi74qgbfrij7dcgjiij94xr" \
+  3
+EXIT_CODE_1=$?
+if [ $EXIT_CODE_1 -ne 0 ]; then
+    echo "❌ Call FAILED (Exit Code: $EXIT_CODE_1). Exiting script immediately." >&2
+    exit $EXIT_CODE_1
+fi
+
+search_replace_check \
+  bandaid_build/nano/secure/common.cpp \
+  "E89208DD038FBB269987689621D52292AE9C35941A7484756ECCED92A65093BA" \
+  "2514452A978F08D1CF76BB40B6AD064183CF275D3CC5D3E0515DC96E2112AD4E" \
+  2
+EXIT_CODE_1=$?
+if [ $EXIT_CODE_1 -ne 0 ]; then
+    echo "❌ Call FAILED (Exit Code: $EXIT_CODE_1). Exiting script immediately." >&2
+    exit $EXIT_CODE_1
+fi
+
+search_replace_check \
+  bandaid_build/nano/secure/common.cpp \
+  "62f05417dd3fb691" \
+  "fa055f79fa56abcf" \
+  1
+EXIT_CODE_1=$?
+if [ $EXIT_CODE_1 -ne 0 ]; then
+    echo "❌ Call FAILED (Exit Code: $EXIT_CODE_1). Exiting script immediately." >&2
+    exit $EXIT_CODE_1
+fi
+
+search_replace_check \
+  bandaid_build/nano/secure/common.cpp \
+  "9F0C933C8ADE004D808EA1985FA746A7E95BA2A38F867640F53EC8F180BDFE9E2C1268DEAD7C2664F356E37ABA362BC58E46DBA03E523A7B5A19E4B6EB12BB02" \
+  "533DCAB343547B93C4128E779848DEA5877D3278CB5EA948BB3A9AA1AE0DB293DE6D9DA4F69E8D1DDFA385F9B4C5E4F38DFA42C00D7B183560435D07AFA18900" \
+  1
+EXIT_CODE_1=$?
+if [ $EXIT_CODE_1 -ne 0 ]; then
+    echo "❌ Call FAILED (Exit Code: $EXIT_CODE_1). Exiting script immediately." >&2
+    exit $EXIT_CODE_1
+fi
+
+sed -i '' 's/[[:space:]]*$//' bandaid_build/nano/secure/common.cpp
+
+
+#nano/secure/utility.cpp
+search_replace_check \
+  bandaid_build/nano/secure/utility.cpp \
+  "\"Banano\"" \
+  "\"BananoData\"" \
+  1
+EXIT_CODE_1=$?
+if [ $EXIT_CODE_1 -ne 0 ]; then
+    echo "❌ Call FAILED (Exit Code: $EXIT_CODE_1). Exiting script immediately." >&2
+    exit $EXIT_CODE_1
+fi
+
+# awk  'NR==34 || NR==37 || NR==40 || NR==43 { sub(":nano", ":banano") }; { print $0 }' bandaid_build/nano/secure/utility.cpp > bandaid_build/nano/secure/utility.cpp.awk
+# mv bandaid_build/nano/secure/utility.cpp.awk bandaid_build/nano/secure/utility.cpp;
+
+# awk  'NR==41 { sub("Nano", "BananoData") }; { print $0 }' bandaid_build/nano/secure/utility.cpp > bandaid_build/nano/secure/utility.cpp.awk
+# mv bandaid_build/nano/secure/utility.cpp.awk bandaid_build/nano/secure/utility.cpp;
+
 
 #nano/core_test/difficulty.cpp
 awk  'NR==59 { sub("0xffffffc000000000", "0xfffffe0000000000") }; { print $0 }' bandaid_build/nano/core_test/difficulty.cpp > bandaid_build/nano/core_test/difficulty.cpp.awk
@@ -214,19 +378,6 @@ mv bandaid_build/nano/lib/constants.hpp.awk bandaid_build/nano/lib/constants.hpp
 awk  'NR==285 || NR==288 { sub("14", "12") }; { print $0 }' bandaid_build/nano/lib/constants.hpp > bandaid_build/nano/lib/constants.hpp.awk
 mv bandaid_build/nano/lib/constants.hpp.awk bandaid_build/nano/lib/constants.hpp;
 
-#nano/lib/numbers.cpp
-awk  'NR==80 || NR==97 { sub("nano_", "bano_") }; { print $0 }' bandaid_build/nano/lib/numbers.cpp > bandaid_build/nano/lib/numbers.cpp.awk
-mv bandaid_build/nano/lib/numbers.cpp.awk bandaid_build/nano/lib/numbers.cpp;
-
-sed -n '1,112p' bandaid_build/nano/lib/numbers.cpp > bandaid_build/nano/lib/numbers.cpp.sed;
-# echo '// INSERT HERE' >> bandaid_build/nano/lib/numbers.cpp.sed;
-sed -n '113,115p' banano_build/nano/lib/numbers.cpp >> bandaid_build/nano/lib/numbers.cpp.sed;
-sed '1,115d' bandaid_build/nano/lib/numbers.cpp >> bandaid_build/nano/lib/numbers.cpp.sed;
-mv bandaid_build/nano/lib/numbers.cpp.sed bandaid_build/nano/lib/numbers.cpp;
-
-awk  'NR==826 { sub(">", ">=") }; { print $0 }' bandaid_build/nano/lib/numbers.cpp > bandaid_build/nano/lib/numbers.cpp.awk
-mv bandaid_build/nano/lib/numbers.cpp.awk bandaid_build/nano/lib/numbers.cpp;
-
 #nano/lib/numbers.hpp
 sed -n '1,22p' bandaid_build/nano/lib/numbers.hpp > bandaid_build/nano/lib/numbers.hpp.sed;
 # echo '// INSERT HERE' >> bandaid_build/nano/lib/numbers.hpp.sed;
@@ -273,16 +424,6 @@ mv bandaid_build/nano/node/nodeconfig.cpp.sed bandaid_build/nano/node/nodeconfig
 awk  'NR==82 { sub(":nano", ":banano") }; { print $0 }' bandaid_build/nano/node/nodeconfig.cpp > bandaid_build/nano/node/nodeconfig.cpp.awk
 mv bandaid_build/nano/node/nodeconfig.cpp.awk bandaid_build/nano/node/nodeconfig.cpp;
 
-#nano/node/nodeconfig.hpp
-awk  'NR==77 { sub("8076", "8072") }; { print $0 }' bandaid_build/nano/node/nodeconfig.hpp > bandaid_build/nano/node/nodeconfig.hpp.awk
-mv bandaid_build/nano/node/nodeconfig.hpp.awk bandaid_build/nano/node/nodeconfig.hpp;
-
-awk  'NR==81 { sub("xrb_ratio", "RAW_ratio") }; { print $0 }' bandaid_build/nano/node/nodeconfig.hpp > bandaid_build/nano/node/nodeconfig.hpp.awk
-mv bandaid_build/nano/node/nodeconfig.hpp.awk bandaid_build/nano/node/nodeconfig.hpp;
-
-awk  'NR==91 { sub("Mxrb_ratio", "RAW_ratio") }; { print $0 }' bandaid_build/nano/node/nodeconfig.hpp > bandaid_build/nano/node/nodeconfig.hpp.awk
-mv bandaid_build/nano/node/nodeconfig.hpp.awk bandaid_build/nano/node/nodeconfig.hpp;
-
 #nano/node/websocket.cpp
 awk  'NR==6 { print "#include <nano/lib/convert.hpp>" }; { print $0 }' bandaid_build/nano/node/websocket.cpp > bandaid_build/nano/node/websocket.cpp.awk
 mv bandaid_build/nano/node/websocket.cpp.awk bandaid_build/nano/node/websocket.cpp;
@@ -295,47 +436,6 @@ mv bandaid_build/nano/node/websocket.cpp.awk bandaid_build/nano/node/websocket.c
 
 awk  'NR==794 { print "\t\t\t\tentry.put (\"weight_decimal\", convert_raw_to_dec (vote_l.weight.convert_to<std::string> ()));" }; { print $0 }' bandaid_build/nano/node/websocket.cpp > bandaid_build/nano/node/websocket.cpp.awk
 mv bandaid_build/nano/node/websocket.cpp.awk bandaid_build/nano/node/websocket.cpp;
-
-#nano/secure/common.cpp
-awk  'NR==32 || NR==55 { sub("E89208DD038FBB269987689621D52292AE9C35941A7484756ECCED92A65093BA", "2514452A978F08D1CF76BB40B6AD064183CF275D3CC5D3E0515DC96E2112AD4E") }; { print $0 }' bandaid_build/nano/secure/common.cpp > bandaid_build/nano/secure/common.cpp.awk
-mv bandaid_build/nano/secure/common.cpp.awk bandaid_build/nano/secure/common.cpp;
-
-awk  'NR==32 { sub("xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3", "ban_1bananobh5rat99qfgt1ptpieie5swmoth87thi74qgbfrij7dcgjiij94xr") }; { print $0 }' bandaid_build/nano/secure/common.cpp > bandaid_build/nano/secure/common.cpp.awk
-mv bandaid_build/nano/secure/common.cpp.awk bandaid_build/nano/secure/common.cpp;
-
-awk  'NR==47 || NR==48 { sub("nano_1betag7az9wk6rbis38s1d35hdsycz1bi95xg4g4j148p6afjk7embcurda4", "bano_1betag7az9wk6rbis38s1d35hdsycz1bi95xg4g4j148p6afjk7embcurda4") }; { print $0 }' bandaid_build/nano/secure/common.cpp > bandaid_build/nano/secure/common.cpp.awk
-mv bandaid_build/nano/secure/common.cpp.awk bandaid_build/nano/secure/common.cpp;
-
-awk  'NR==56 { sub("xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3", "ban_1bananobh5rat99qfgt1ptpieie5swmoth87thi74qgbfrij7dcgjiij94xr") }; { print $0 }' bandaid_build/nano/secure/common.cpp > bandaid_build/nano/secure/common.cpp.awk
-mv bandaid_build/nano/secure/common.cpp.awk bandaid_build/nano/secure/common.cpp;
-
-awk  'NR==57 { sub("xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3", "ban_1bananobh5rat99qfgt1ptpieie5swmoth87thi74qgbfrij7dcgjiij94xr") }; { print $0 }' bandaid_build/nano/secure/common.cpp > bandaid_build/nano/secure/common.cpp.awk
-mv bandaid_build/nano/secure/common.cpp.awk bandaid_build/nano/secure/common.cpp;
-
-awk  'NR==58 { sub("62f05417dd3fb691", "fa055f79fa56abcf") }; { print $0 }' bandaid_build/nano/secure/common.cpp > bandaid_build/nano/secure/common.cpp.awk
-mv bandaid_build/nano/secure/common.cpp.awk bandaid_build/nano/secure/common.cpp;
-
-awk  'NR==59 { sub("9F0C933C8ADE004D808EA1985FA746A7E95BA2A38F867640F53EC8F180BDFE9E2C1268DEAD7C2664F356E37ABA362BC58E46DBA03E523A7B5A19E4B6EB12BB02", "533DCAB343547B93C4128E779848DEA5877D3278CB5EA948BB3A9AA1AE0DB293DE6D9DA4F69E8D1DDFA385F9B4C5E4F38DFA42C00D7B183560435D07AFA18900") }; { print $0 }' bandaid_build/nano/secure/common.cpp > bandaid_build/nano/secure/common.cpp.awk
-mv bandaid_build/nano/secure/common.cpp.awk bandaid_build/nano/secure/common.cpp;
-
-awk  'NR==65 { sub("nano_1jg8zygjg3pp5w644emqcbmjqpnzmubfni3kfe1s8pooeuxsw49fdq1mco9j", "bano_1jg8zygjg3pp5w644emqcbmjqpnzmubfni3kfe1s8pooeuxsw49fdq1mco9j") }; { print $0 }' bandaid_build/nano/secure/common.cpp > bandaid_build/nano/secure/common.cpp.awk
-mv bandaid_build/nano/secure/common.cpp.awk bandaid_build/nano/secure/common.cpp;
-
-awk  'NR==66 { sub("nano_1jg8zygjg3pp5w644emqcbmjqpnzmubfni3kfe1s8pooeuxsw49fdq1mco9j", "bano_1jg8zygjg3pp5w644emqcbmjqpnzmubfni3kfe1s8pooeuxsw49fdq1mco9j") }; { print $0 }' bandaid_build/nano/secure/common.cpp > bandaid_build/nano/secure/common.cpp.awk
-mv bandaid_build/nano/secure/common.cpp.awk bandaid_build/nano/secure/common.cpp;
-
-awk  'NR==38 || NR==39 { sub("xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpiij4txtdo", "ban_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpiij4txtdo") }; { print $0 }' bandaid_build/nano/secure/common.cpp > bandaid_build/nano/secure/common.cpp.awk
-mv bandaid_build/nano/secure/common.cpp.awk bandaid_build/nano/secure/common.cpp;
-
-awk  'NR==201 { sub("nano_3qb6o6i1tkzr6jwr5s7eehfxwg9x6eemitdinbpi7u8bjjwsgqfj4wzser3x", "bano_3qb6o6i1tkzr6jwr5s7eehfxwg9x6eemitdinbpi7u8bjjwsgqfj4wzser3x") }; { print $0 }' bandaid_build/nano/secure/common.cpp > bandaid_build/nano/secure/common.cpp.awk
-mv bandaid_build/nano/secure/common.cpp.awk bandaid_build/nano/secure/common.cpp;
-
-#nano/secure/utility.cpp
-awk  'NR==34 || NR==37 || NR==40 || NR==43 { sub(":nano", ":banano") }; { print $0 }' bandaid_build/nano/secure/utility.cpp > bandaid_build/nano/secure/utility.cpp.awk
-mv bandaid_build/nano/secure/utility.cpp.awk bandaid_build/nano/secure/utility.cpp;
-
-awk  'NR==41 { sub("Nano", "BananoData") }; { print $0 }' bandaid_build/nano/secure/utility.cpp > bandaid_build/nano/secure/utility.cpp.awk
-mv bandaid_build/nano/secure/utility.cpp.awk bandaid_build/nano/secure/utility.cpp;
 
 #nano/slow_test/flamegraph.cpp
 awk  'NR==46 || NR==86 { sub("xrb_ratio", "raw_ratio") }; { print $0 }' bandaid_build/nano/slow_test/flamegraph.cpp > bandaid_build/nano/slow_test/flamegraph.cpp.awk
@@ -613,37 +713,6 @@ sed -n '1,5409p' bandaid_build/nano/node/json_handler.cpp > bandaid_build/nano/n
 sed -n '5410,5495p' banano_build/nano/node/json_handler.cpp >> bandaid_build/nano/node/json_handler.cpp.sed;
 sed '1,5409d' bandaid_build/nano/node/json_handler.cpp >> bandaid_build/nano/node/json_handler.cpp.sed;
 mv bandaid_build/nano/node/json_handler.cpp.sed bandaid_build/nano/node/json_handler.cpp;
-
-#nano/rpc_test/rpc.cpp
-awk  'NR==1117 || NR==1201 { sub("Gxrb_ratio", "MBAN_ratio") }; { print $0 }' bandaid_build/nano/rpc_test/rpc.cpp > bandaid_build/nano/rpc_test/rpc.cpp.awk
-mv bandaid_build/nano/rpc_test/rpc.cpp.awk bandaid_build/nano/rpc_test/rpc.cpp;
-
-awk  'NR==2849 || NR==2855 { sub("mrai_to_raw", "ban_to_raw") }; { print $0 }' bandaid_build/nano/rpc_test/rpc.cpp > bandaid_build/nano/rpc_test/rpc.cpp.awk
-mv bandaid_build/nano/rpc_test/rpc.cpp.awk bandaid_build/nano/rpc_test/rpc.cpp;
-
-awk  'NR==2855 { sub("nano_1os6", "bano_1os6") }; { print $0 }' bandaid_build/nano/rpc_test/rpc.cpp > bandaid_build/nano/rpc_test/rpc.cpp.awk
-mv bandaid_build/nano/rpc_test/rpc.cpp.awk bandaid_build/nano/rpc_test/rpc.cpp;
-
-awk  'NR==2861 { sub("mrai_from_raw", "ban_from_raw") }; { print $0 }' bandaid_build/nano/rpc_test/rpc.cpp > bandaid_build/nano/rpc_test/rpc.cpp.awk
-mv bandaid_build/nano/rpc_test/rpc.cpp.awk bandaid_build/nano/rpc_test/rpc.cpp;
-
-awk  'NR==2873 || NR==2879 { sub("krai_to_raw", "banoshi_to_raw") }; { print $0 }' bandaid_build/nano/rpc_test/rpc.cpp > bandaid_build/nano/rpc_test/rpc.cpp.awk
-mv bandaid_build/nano/rpc_test/rpc.cpp.awk bandaid_build/nano/rpc_test/rpc.cpp;
-
-awk  'NR==2885 { sub("krai_from_raw", "banoshi_from_raw") }; { print $0 }' bandaid_build/nano/rpc_test/rpc.cpp > bandaid_build/nano/rpc_test/rpc.cpp.awk
-mv bandaid_build/nano/rpc_test/rpc.cpp.awk bandaid_build/nano/rpc_test/rpc.cpp;
-
-awk  'NR==3023 { sub("nano_36uc", "ban_36uc") }; { print $0 }' bandaid_build/nano/rpc_test/rpc.cpp > bandaid_build/nano/rpc_test/rpc.cpp.awk
-mv bandaid_build/nano/rpc_test/rpc.cpp.awk bandaid_build/nano/rpc_test/rpc.cpp;
-
-awk  'NR==3028 { sub("nano_1hrt", "ban_1hrt") }; { print $0 }' bandaid_build/nano/rpc_test/rpc.cpp > bandaid_build/nano/rpc_test/rpc.cpp.awk
-mv bandaid_build/nano/rpc_test/rpc.cpp.awk bandaid_build/nano/rpc_test/rpc.cpp;
-
-awk  'NR==3096 { sub("nano_3e3j", "ban_3e3j") }; { print $0 }' bandaid_build/nano/rpc_test/rpc.cpp > bandaid_build/nano/rpc_test/rpc.cpp.awk
-mv bandaid_build/nano/rpc_test/rpc.cpp.awk bandaid_build/nano/rpc_test/rpc.cpp;
-
-awk  'NR==3102 { sub("nano_1os6", "ban_1os6") }; { print $0 }' bandaid_build/nano/rpc_test/rpc.cpp > bandaid_build/nano/rpc_test/rpc.cpp.awk
-mv bandaid_build/nano/rpc_test/rpc.cpp.awk bandaid_build/nano/rpc_test/rpc.cpp;
 
 # git checkpoint
 cd bandaid_build;

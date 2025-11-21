@@ -32,13 +32,19 @@ do
   mv bandaid_build/$p.awk bandaid_build/$p;
 done < input/xrb-to-ban.txt
 
+#Knano_ratio-to-MBAN_ratio.txt
+while IFS="" read -r p || [ -n "$p" ]
+do
+  printf 'Knano_ratio-to-MBAN_ratio %s\n' "$p"
+  awk  '{ gsub("Knano_ratio", "MBAN_ratio") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
+  mv bandaid_build/$p.awk bandaid_build/$p;
+done < input/Knano_ratio-to-MBAN_ratio.txt
+
 #nano_ratio-to-BAN_ratio.txt
 while IFS="" read -r p || [ -n "$p" ]
 do
   printf 'nano_ratio-to-BAN_ratio %s\n' "$p"
-  sed -E 's/(^|[^K])nano_ratio/\1BAN_ratio/g' bandaid_build/$p > bandaid_build/$p.awk
-  # awk  '{ gsub(/[^K]nano_ratio/, "BAN_ratio") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
-  # awk  '{ gsub("nano_ratio", "BAN_ratio") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
+  awk  '{ gsub("nano_ratio", "BAN_ratio") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
   mv bandaid_build/$p.awk bandaid_build/$p;
 done < input/nano_ratio-to-BAN_ratio.txt
 
@@ -142,14 +148,6 @@ do
   mv bandaid_build/$p.awk bandaid_build/$p;
 done < input/nano_-to-banano_.txt
 
-#Knano_ratio-to-MBAN_ratio.txt
-while IFS="" read -r p || [ -n "$p" ]
-do
-  printf 'Knano_ratio-to-MBAN_ratio %s\n' "$p"
-  awk  '{ gsub("Knano_ratio", "MBAN_ratio") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
-  mv bandaid_build/$p.awk bandaid_build/$p;
-done < input/Knano_ratio-to-MBAN_ratio.txt
-
 #xrb_ratio-to-RAW_ratio.txt
 while IFS="" read -r p || [ -n "$p" ]
 do
@@ -228,8 +226,7 @@ cd ..;
 #nano/core_test/
 truncate -s -1 bandaid_build/nano/core_test/backlog.cpp;
 truncate -s -1 bandaid_build/nano/core_test/numbers.cpp;
-# sed -i -e '$a\' -e '' banano_build/nano/node/monitor.cpp;
-# sed -i -e '$a\' -e '' bandaid_build/nano/node/monitor.cpp;
+sed -i '$a\' bandaid_build/nano/node/monitor.cpp;
 
 # git checkpoint
 cd bandaid_build;

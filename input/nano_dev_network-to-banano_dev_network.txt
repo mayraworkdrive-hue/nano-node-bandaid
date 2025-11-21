@@ -4,3 +4,4 @@ nano/core_test/telemetry.cpp
 nano/lib/config.cpp
 nano/nano_node/entry.cpp
 nano/secure/common.cpp
+nano/secure/utility.cpp

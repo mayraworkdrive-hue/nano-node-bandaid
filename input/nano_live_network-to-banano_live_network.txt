@@ -1,3 +1,4 @@
 CMakeLists.txt
 nano/lib/config.cpp
 nano/secure/common.cpp
+nano/secure/utility.cpp
