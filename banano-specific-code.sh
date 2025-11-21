@@ -1,3 +1,12 @@
+# load helper function
+source ./search-replace-check.sh
+
+# check it worked
+if [ $? -ne 0 ]; then
+    echo "Error: Could not source 'search-replace-check.sh'. Exiting." >&2
+    exit 1
+fi
+
 #.gitignore
 awk  'NR==33 || NR==34 { sub("nano_node", "bananode") }; { print $0 }' bandaid_build/.gitignore > bandaid_build/.gitignore.awk
 mv bandaid_build/.gitignore.awk bandaid_build/.gitignore;
@@ -33,21 +42,81 @@ sed -n '25,29p' banano_build/ci/actions/deploy.sh >> bandaid_build/ci/actions/de
 sed '1,26d' bandaid_build/ci/actions/deploy.sh >> bandaid_build/ci/actions/deploy.sh.sed;
 mv bandaid_build/ci/actions/deploy.sh.sed bandaid_build/ci/actions/deploy.sh;
 
+# # CMakeLists.txt
+sed -n '1,158p' bandaid_build/CMakeLists.txt > bandaid_build/CMakeLists.txt.sed;
+# echo '// BEGIN INSERT HERE' >> bandaid_build/CMakeLists.txt.sed;
+sed -n '159,179p' banano_build/CMakeLists.txt >> bandaid_build/CMakeLists.txt.sed;
+# echo '// END INSERT HERE' >> bandaid_build/CMakeLists.txt.sed;
+sed '1,161d' bandaid_build/CMakeLists.txt >> bandaid_build/CMakeLists.txt.sed;
+mv bandaid_build/CMakeLists.txt.sed bandaid_build/CMakeLists.txt;
+
 #nano/core_test/block.cpp
-awk  'NR==664 || NR==665 { sub("xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3", "ban_1bananobh5rat99qfgt1ptpieie5swmoth87thi74qgbfrij7dcgjiij94xr") }; { print $0 }' bandaid_build/nano/core_test/block.cpp > bandaid_build/nano/core_test/block.cpp.awk
-mv bandaid_build/nano/core_test/block.cpp.awk bandaid_build/nano/core_test/block.cpp;
+search_replace_check \
+  bandaid_build/nano/core_test/block.cpp \
+  "ban_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3" \
+  "ban_1bananobh5rat99qfgt1ptpieie5swmoth87thi74qgbfrij7dcgjiij94xr" \
+  2
+EXIT_CODE_1=$?
+if [ $EXIT_CODE_1 -ne 0 ]; then
+    echo "❌ Call FAILED (Exit Code: $EXIT_CODE_1). Exiting script immediately." >&2
+    exit $EXIT_CODE_1
+fi
 
-awk  'NR==666 || NR==669 { sub("E89208DD038FBB269987689621D52292AE9C35941A7484756ECCED92A65093BA", "2514452A978F08D1CF76BB40B6AD064183CF275D3CC5D3E0515DC96E2112AD4E") }; { print $0 }' bandaid_build/nano/core_test/block.cpp > bandaid_build/nano/core_test/block.cpp.awk
-mv bandaid_build/nano/core_test/block.cpp.awk bandaid_build/nano/core_test/block.cpp;
+search_replace_check \
+  bandaid_build/nano/core_test/block.cpp \
+  "E89208DD038FBB269987689621D52292AE9C35941A7484756ECCED92A65093BA" \
+  "2514452A978F08D1CF76BB40B6AD064183CF275D3CC5D3E0515DC96E2112AD4E" \
+  2
+EXIT_CODE_1=$?
+if [ $EXIT_CODE_1 -ne 0 ]; then
+    echo "❌ Call FAILED (Exit Code: $EXIT_CODE_1). Exiting script immediately." >&2
+    exit $EXIT_CODE_1
+fi
 
-awk  'NR==668 { sub("991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948", "F61A79F286ABC5CC01D3D09686F0567812B889A5C63ADE0E82DD30F3B2D96463") }; { print $0 }' bandaid_build/nano/core_test/block.cpp > bandaid_build/nano/core_test/block.cpp.awk
-mv bandaid_build/nano/core_test/block.cpp.awk bandaid_build/nano/core_test/block.cpp;
+search_replace_check \
+  bandaid_build/nano/core_test/block.cpp \
+  "991CF190094C00F0B68E2E5F75F6BEE95A2E0BD93CEAA4A6734DB9F19B728948" \
+  "F61A79F286ABC5CC01D3D09686F0567812B889A5C63ADE0E82DD30F3B2D96463" \
+  1
+EXIT_CODE_1=$?
+if [ $EXIT_CODE_1 -ne 0 ]; then
+    echo "❌ Call FAILED (Exit Code: $EXIT_CODE_1). Exiting script immediately." >&2
+    exit $EXIT_CODE_1
+fi
 
-awk  'NR==742 { sub("ban_1gys8", "bano_1gys8") }; { print $0 }' bandaid_build/nano/core_test/block.cpp > bandaid_build/nano/core_test/block.cpp.awk
-mv bandaid_build/nano/core_test/block.cpp.awk bandaid_build/nano/core_test/block.cpp;
+search_replace_check \
+  bandaid_build/nano/core_test/block.cpp \
+  "bano_1gys8r4crpxhp94n4uho5cshaho81na6454qni5gu9n53gksoyy1wcd4udyb" \
+  "ban_1gys8r4crpxhp94n4uho5cshaho81na6454qni5gu9n53gksoyy1wcd4udyb" \
+  1
+EXIT_CODE_1=$?
+if [ $EXIT_CODE_1 -ne 0 ]; then
+    echo "❌ Call FAILED (Exit Code: $EXIT_CODE_1). Exiting script immediately." >&2
+    exit $EXIT_CODE_1
+fi
 
-awk  'NR==748 { sub("nano_1gys8r4crpxhp94n4uho5cshaho81na6454qni5gu9n53gksoyy1wcd4udyb", "bano_1gys8r4crpxhp94n4uho5cshaho81na6454qni5gu9n53gksoyy1wcd4udyb") }; { print $0 }' bandaid_build/nano/core_test/block.cpp > bandaid_build/nano/core_test/block.cpp.awk
-mv bandaid_build/nano/core_test/block.cpp.awk bandaid_build/nano/core_test/block.cpp;
+search_replace_check \
+  bandaid_build/nano/core_test/block.cpp \
+  "nano_1gys8r4crpxhp94n4uho5cshaho81na6454qni5gu9n53gksoyy1wcd4udyb" \
+  "ban_1gys8r4crpxhp94n4uho5cshaho81na6454qni5gu9n53gksoyy1wcd4udyb" \
+  1
+EXIT_CODE_1=$?
+if [ $EXIT_CODE_1 -ne 0 ]; then
+    echo "❌ Call FAILED (Exit Code: $EXIT_CODE_1). Exiting script immediately." >&2
+    exit $EXIT_CODE_1
+fi
+
+#nano/core_test/numbers.cpp
+# search_replace_check \
+#   bandaid_build/nano/core_test/numbers.cpp \
+#   "bano_1111111111111111111111111111111111111111111111111111hifc8npp" \
+#   "ban_1111111111111111111111111111111111111111111111111111hifc8npp" \
+#   1
+# EXIT_CODE_1=$?
+# if [ $EXIT_CODE_1 -ne 0 ]; then
+#     echo "❌ Call FAILED (Exit Code: $EXIT_CODE_1). Exiting script immediately." >&2
+#     exit $EXIT_CODE_1
+# fi
 
 #nano/core_test/difficulty.cpp
 awk  'NR==59 { sub("0xffffffc000000000", "0xfffffe0000000000") }; { print $0 }' bandaid_build/nano/core_test/difficulty.cpp > bandaid_build/nano/core_test/difficulty.cpp.awk
@@ -272,13 +341,6 @@ mv bandaid_build/nano/secure/utility.cpp.awk bandaid_build/nano/secure/utility.c
 awk  'NR==46 || NR==86 { sub("xrb_ratio", "raw_ratio") }; { print $0 }' bandaid_build/nano/slow_test/flamegraph.cpp > bandaid_build/nano/slow_test/flamegraph.cpp.awk
 mv bandaid_build/nano/slow_test/flamegraph.cpp.awk bandaid_build/nano/slow_test/flamegraph.cpp;
 
-# git checkpoint
-cd bandaid_build;
-git add .;
-git commit -m "essential changes";
-cd ..;
-# git checkpoint
-
 #nano/node/cli.cpp
 sed -n '1,7p' bandaid_build/nano/node/cli.cpp > bandaid_build/nano/node/cli.cpp.sed;
 # echo '// INSERT HERE' >> bandaid_build/nano/node/cli.cpp.sed
@@ -322,23 +384,9 @@ cp banano_build/nano/node/cli.cpp bandaid_build/nano/node/cli.cpp.sed;
 sed '1,1599d' bandaid_build/nano/node/cli.cpp >> bandaid_build/nano/node/cli.cpp.sed;
 mv bandaid_build/nano/node/cli.cpp.sed bandaid_build/nano/node/cli.cpp;
 
-# git checkpoint
-cd bandaid_build;
-git add .;
-git commit -m "nano/node/cli.cpp";
-cd ..;
-# git checkpoint
-
 #nano/node/election.cpp
 awk 'NR==196 { sub("node.network_params.network.is_dev_network \\(\\) \\? 500 : ","") }; { print $0 }' bandaid_build/nano/node/election.cpp > bandaid_build/nano/node/election.cpp.awk
 mv bandaid_build/nano/node/election.cpp.awk bandaid_build/nano/node/election.cpp;
-
-# git checkpoint
-cd bandaid_build;
-git add .;
-git commit -m "nano/node/election.cpp";
-cd ..;
-# git checkpoint
 
 #nano/node/json_handler.hpp
 awk  'NR==70 { print "\tvoid delegators_decimal ();" }; { print $0 }' bandaid_build/nano/node/json_handler.hpp > bandaid_build/nano/node/json_handler.hpp.awk
@@ -566,13 +614,6 @@ sed -n '5410,5495p' banano_build/nano/node/json_handler.cpp >> bandaid_build/nan
 sed '1,5409d' bandaid_build/nano/node/json_handler.cpp >> bandaid_build/nano/node/json_handler.cpp.sed;
 mv bandaid_build/nano/node/json_handler.cpp.sed bandaid_build/nano/node/json_handler.cpp;
 
-# git checkpoint
-cd bandaid_build;
-git add .;
-git commit -m "nano/node/json_handler.cpp";
-cd ..;
-# git checkpoint
-
 #nano/rpc_test/rpc.cpp
 awk  'NR==1117 || NR==1201 { sub("Gxrb_ratio", "MBAN_ratio") }; { print $0 }' bandaid_build/nano/rpc_test/rpc.cpp > bandaid_build/nano/rpc_test/rpc.cpp.awk
 mv bandaid_build/nano/rpc_test/rpc.cpp.awk bandaid_build/nano/rpc_test/rpc.cpp;
@@ -604,302 +645,9 @@ mv bandaid_build/nano/rpc_test/rpc.cpp.awk bandaid_build/nano/rpc_test/rpc.cpp;
 awk  'NR==3102 { sub("nano_1os6", "ban_1os6") }; { print $0 }' bandaid_build/nano/rpc_test/rpc.cpp > bandaid_build/nano/rpc_test/rpc.cpp.awk
 mv bandaid_build/nano/rpc_test/rpc.cpp.awk bandaid_build/nano/rpc_test/rpc.cpp;
 
-
 # git checkpoint
 cd bandaid_build;
 git add .;
-git commit -m "nano/rpc_test/rpc.cpp";
-cd ..;
-# git checkpoint
-
-#nano_rpc-to-banano_rpc.txt
-while IFS="" read -r p || [ -n "$p" ]
-do
-  printf 'nano_rpc-to-banano_rpc %s\n' "$p"
-  awk  '{ gsub("nano_rpc", "banano_rpc") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
-  mv bandaid_build/$p.awk bandaid_build/$p;
-done < input/nano_rpc-to-banano_rpc.txt
-
-# git checkpoint
-cd bandaid_build;
-git add .;
-git commit -m "nano_rpc-to-banano_rpc";
-cd ..;
-# git checkpoint
-
-#nano_node-to-bananode.txt
-while IFS="" read -r p || [ -n "$p" ]
-do
-  printf 'nano_node-to-bananode %s\n' "$p"
-  awk  '{ gsub("nano_node", "bananode") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
-  mv bandaid_build/$p.awk bandaid_build/$p;
-done < input/nano_node-to-bananode.txt
-
-# git checkpoint
-cd bandaid_build;
-git add .;
-git commit -m "nano_node-to-bananode";
-cd ..;
-# git checkpoint
-
-#nano-to-bano.txt
-while IFS="" read -r p || [ -n "$p" ]
-do
-  printf 'nano-to-bano %s\n' "$p"
-  sed -E 's/\"nano/\"bano/g' bandaid_build/$p > bandaid_build/$p.awk
-  mv bandaid_build/$p.awk bandaid_build/$p;
-done < input/nano-to-bano.txt
-
-# git checkpoint
-cd bandaid_build;
-git add .;
-git commit -m "nano-to-bano";
-cd ..;
-# git checkpoint
-
-#xrb-to-ban.txt
-while IFS="" read -r p || [ -n "$p" ]
-do
-  printf 'xrb-to-ban %s\n' "$p"
-  sed -E 's/(^|[^K])xrb/\1ban/g' bandaid_build/$p > bandaid_build/$p.awk
-  mv bandaid_build/$p.awk bandaid_build/$p;
-done < input/xrb-to-ban.txt
-
-# git checkpoint
-cd bandaid_build;
-git add .;
-git commit -m "xrb-to-ban";
-cd ..;
-# git checkpoint
-
-#nano_ratio-to-BAN_ratio.txt
-while IFS="" read -r p || [ -n "$p" ]
-do
-  printf 'nano_ratio-to-BAN_ratio %s\n' "$p"
-  sed -E 's/(^|[^K])nano_ratio/\1BAN_ratio/g' bandaid_build/$p > bandaid_build/$p.awk
-  # awk  '{ gsub(/[^K]nano_ratio/, "BAN_ratio") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
-  # awk  '{ gsub("nano_ratio", "BAN_ratio") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
-  mv bandaid_build/$p.awk bandaid_build/$p;
-done < input/nano_ratio-to-BAN_ratio.txt
-
-# git checkpoint
-cd bandaid_build;
-git add .;
-git commit -m "nano_ratio-to-BAN_ratio";
-cd ..;
-# git checkpoint
-
-#kRAW-to-banoshi.txt
-while IFS="" read -r p || [ -n "$p" ]
-do
-  printf 'kRAW-to-banoshi %s\n' "$p"
-  awk  '{ gsub("kRAW", "banoshi") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
-  mv bandaid_build/$p.awk bandaid_build/$p;
-done < input/kRAW-to-banoshi.txt
-
-# git checkpoint
-cd bandaid_build;
-git add .;
-git commit -m "kRAW-to-banoshi";
-cd ..;
-# git checkpoint
-
-#nanocurrency-to-bananocoin.txt
-while IFS="" read -r p || [ -n "$p" ]
-do
-  printf 'nanocurrency-to-bananocoin %s\n' "$p"
-  awk  '{ gsub("nanocurrency", "bananocoin") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
-  mv bandaid_build/$p.awk bandaid_build/$p;
-done < input/nanocurrency-to-bananocoin.txt
-
-# git checkpoint
-cd bandaid_build;
-git add .;
-git commit -m "nanocurrency-to-bananocoin";
-cd ..;
-# git checkpoint
-
-#Nanocurrency-to-Bananocurrency.txt
-while IFS="" read -r p || [ -n "$p" ]
-do
-  printf 'Nanocurrency-to-Bananocurrency %s\n' "$p"
-  awk  '{ gsub("Nanocurrency", "Bananocurrency") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
-  mv bandaid_build/$p.awk bandaid_build/$p;
-done < input/Nanocurrency-to-Bananocurrency.txt
-
-# git checkpoint
-cd bandaid_build;
-git add .;
-git commit -m "Nanocurrency-to-Bananocurrency";
-cd ..;
-# git checkpoint
-
-# #Nano-to-Banano.txt
-while IFS="" read -r p || [ -n "$p" ]
-do
-  printf 'Nano-to-Banano %s\n' "$p"
-  awk  '{ gsub("Nano", "Banano") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
-  mv bandaid_build/$p.awk bandaid_build/$p;
-done < input/Nano-to-Banano.txt
-
-# git checkpoint
-cd bandaid_build;
-git add .;
-git commit -m "Nano-to-Banano";
-cd ..;
-# git checkpoint
-
-#Nano_Currency-to-Bananocoin.txt
-while IFS="" read -r p || [ -n "$p" ]
-do
-  printf 'Nano_Currency-to-Bananocoin %s\n' "$p"
-  awk  '{ gsub("Nano Currency", "Bananocoin") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
-  mv bandaid_build/$p.awk bandaid_build/$p;
-done < input/Nano_Currency-to-Bananocoin.txt
-
-# git checkpoint
-cd bandaid_build;
-git add .;
-git commit -m "Nano_Currency-to-Bananocoin";
-cd ..;
-# git checkpoint
-
-#nano_live_network-to-banano_live_network.txt
-while IFS="" read -r p || [ -n "$p" ]
-do
-  printf 'nano_live_network-to-banano_live_network %s\n' "$p"
-  awk  '{ gsub("nano_live_network", "banano_live_network") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
-  mv bandaid_build/$p.awk bandaid_build/$p;
-done < input/nano_live_network-to-banano_live_network.txt
-
-#nano_test_network-to-banano_test_network.txt
-while IFS="" read -r p || [ -n "$p" ]
-do
-  printf 'nano_test_network-to-banano_test_network %s\n' "$p"
-  awk  '{ gsub("nano_test_network", "banano_test_network") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
-  mv bandaid_build/$p.awk bandaid_build/$p;
-done < input/nano_test_network-to-banano_test_network.txt
-
-#nano_dev_network-to-banano_dev_network.txt
-while IFS="" read -r p || [ -n "$p" ]
-do
-  printf 'nano_dev_network-to-banano_dev_network %s\n' "$p"
-  awk  '{ gsub(" nano_dev_network", " banano_dev_network") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
-  mv bandaid_build/$p.awk bandaid_build/$p;
-done < input/nano_dev_network-to-banano_dev_network.txt
-while IFS="" read -r p || [ -n "$p" ]
-do
-  printf 'nano_dev_network-to-banano_dev_network %s\n' "$p"
-  awk  '{ gsub("=nano_dev_network", "=banano_dev_network") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
-  mv bandaid_build/$p.awk bandaid_build/$p;
-done < input/nano_dev_network-to-banano_dev_network.txt
-while IFS="" read -r p || [ -n "$p" ]
-do
-  printf 'nano_dev_network-to-banano_dev_network %s\n' "$p"
-  awk  '{ gsub(":nano_dev_network", ":banano_dev_network") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
-  mv bandaid_build/$p.awk bandaid_build/$p;
-done < input/nano_dev_network-to-banano_dev_network.txt
-
-#nano_beta_network-to-banano_beta_network.txt
-while IFS="" read -r p || [ -n "$p" ]
-do
-  printf 'nano_beta_network-to-banano_beta_network %s\n' "$p"
-  awk  '{ gsub("nano_beta_network", "banano_beta_network") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
-  mv bandaid_build/$p.awk bandaid_build/$p;
-done < input/nano_beta_network-to-banano_beta_network.txt
-
-# git checkpoint
-cd bandaid_build;
-git add .;
-git commit -m "nano_X_network-to-banano_X_network";
-cd ..;
-# git checkpoint
-
-#nano_wallet-to-banano_wallet.txt
-while IFS="" read -r p || [ -n "$p" ]
-do
-  printf 'nano_wallet-to-banano_wallet.txt %s\n' "$p"
-  awk  '{ gsub("nano_wallet", "banano_wallet") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
-  mv bandaid_build/$p.awk bandaid_build/$p;
-done < input/nano_wallet-to-banano_wallet.txt
-
-# git checkpoint
-cd bandaid_build;
-git add .;
-git commit -m "nano_wallet-to-banano_wallet";
-cd ..;
-# git checkpoint
-
-#nano_-to-banano_.txt
-while IFS="" read -r p || [ -n "$p" ]
-do
-  printf 'nano_-to-banano_ %s\n' "$p"
-  awk  '{ gsub("nano_", "banano_") }; { print $0 }' bandaid_build/$p > bandaid_build/$p.awk
-  mv bandaid_build/$p.awk bandaid_build/$p;
-done < input/nano_-to-banano_.txt
-
-# git checkpoint
-cd bandaid_build;
-git add .;
-git commit -m "nano_-to-banano_";
-cd ..;
-# git checkpoint
-
-# buggy conversions
-printf 'undoing buggy conversions\n'
-
-#./CMakeLists.txt
-awk  'NR==42 { gsub("Banano Currency", "Bananocoin") }; { print $0 }' bandaid_build/CMakeLists.txt > bandaid_build/CMakeLists.txt.awk
-mv bandaid_build/CMakeLists.txt.awk bandaid_build/CMakeLists.txt;
-awk  'NR==723 { gsub("bananode", "nano_node") }; { print $0 }' bandaid_build/CMakeLists.txt > bandaid_build/CMakeLists.txt.awk
-mv bandaid_build/CMakeLists.txt.awk bandaid_build/CMakeLists.txt;
-awk  'NR==725 { gsub("banano_rpc", "nano_rpc") }; { print $0 }' bandaid_build/CMakeLists.txt > bandaid_build/CMakeLists.txt.awk
-mv bandaid_build/CMakeLists.txt.awk bandaid_build/CMakeLists.txt;
-awk  'NR==830 { gsub("Banano.rc", "Nano.rc") }; { print $0 }' bandaid_build/CMakeLists.txt > bandaid_build/CMakeLists.txt.awk
-mv bandaid_build/CMakeLists.txt.awk bandaid_build/CMakeLists.txt;
-awk  'NR==901 { gsub("Banano.icns", "Nano.icns") }; { print $0 }' bandaid_build/CMakeLists.txt > bandaid_build/CMakeLists.txt.awk
-mv bandaid_build/CMakeLists.txt.awk bandaid_build/CMakeLists.txt;
-awk  'NR==911 || NR==912 || NR==915 || NR==917 || NR==918 || NR==921 || NR==922 { gsub("Banano", "Nano") }; { print $0 }' bandaid_build/CMakeLists.txt > bandaid_build/CMakeLists.txt.awk
-mv bandaid_build/CMakeLists.txt.awk bandaid_build/CMakeLists.txt;
-
-#nano/nano_node/entry.cpp
-awk  'NR==134 || NR==135 || NR==136 { sub("banano_dev_network", "nano_dev_network") }; { print $0 }' bandaid_build/nano/nano_node/entry.cpp > bandaid_build/nano/nano_node/entry.cpp.awk
-mv bandaid_build/nano/nano_node/entry.cpp.awk bandaid_build/nano/nano_node/entry.cpp;
-
-#nano/nano_wallet/entry.cpp
-awk  'NR==39 { sub("Banano", "Nano") }; { print $0 }' bandaid_build/nano/nano_wallet/entry.cpp > bandaid_build/nano/nano_wallet/entry.cpp.awk
-mv bandaid_build/nano/nano_wallet/entry.cpp.awk bandaid_build/nano/nano_wallet/entry.cpp;
-
-#nano/node/portmapping.cpp
-awk  'NR==184 { sub("Banano", "Nano") }; { print $0 }' bandaid_build/nano/node/portmapping.cpp > bandaid_build/nano/node/portmapping.cpp.awk
-mv bandaid_build/nano/node/portmapping.cpp.awk bandaid_build/nano/node/portmapping.cpp;
-
-#nanocurrency-beta.spec.in
-awk  'NR==41 || NR==42 { gsub("bananocoin", "nanocurrency") }; { print $0 }' bandaid_build/nanocurrency-beta.spec.in > bandaid_build/nanocurrency-beta.spec.in.awk
-mv bandaid_build/nanocurrency-beta.spec.in.awk bandaid_build/nanocurrency-beta.spec.in;
-
-awk  'NR==42 { gsub("bananode", "nano_node") }; { print $0 }' bandaid_build/nanocurrency-beta.spec.in > bandaid_build/nanocurrency-beta.spec.in.awk
-mv bandaid_build/nanocurrency-beta.spec.in.awk bandaid_build/nanocurrency-beta.spec.in;
-
-#nano/node/cli.cpp
-awk  'NR==786 { gsub("Banano", "Nano") }; { print $0 }' bandaid_build/nano/node/cli.cpp > bandaid_build/nano/node/cli.cpp.awk
-mv bandaid_build/nano/node/cli.cpp.awk bandaid_build/nano/node/cli.cpp;
-
-#nano/core_test/websocket.cpp
-awk  'NR==247 || NR==928 { gsub("ban", "xrb") }; { print $0 }' bandaid_build/nano/core_test/websocket.cpp > bandaid_build/nano/core_test/websocket.cpp.awk
-mv bandaid_build/nano/core_test/websocket.cpp.awk bandaid_build/nano/core_test/websocket.cpp;
-
-#nano/secure/common.cpp
-awk  'NR==30{ gsub("ban", "xrb") }; { print $0 }' bandaid_build/nano/secure/common.cpp > bandaid_build/nano/secure/common.cpp.awk
-mv bandaid_build/nano/secure/common.cpp.awk bandaid_build/nano/secure/common.cpp;
-
-#nano/core_test/block.cpp
-awk  'NR==742{ gsub("ban", "bano") }; { print $0 }' bandaid_build/nano/core_test/block.cpp > bandaid_build/nano/core_test/block.cpp.awk
-mv bandaid_build/nano/core_test/block.cpp.awk bandaid_build/nano/core_test/block.cpp;
-
-# git checkpoint
-cd bandaid_build;
-git add .;
-git commit -m "undoing buggy conversions";
+git commit -m "essential changes";
 cd ..;
 # git checkpoint

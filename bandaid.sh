@@ -86,9 +86,19 @@ git commit -m "Initial commit";
 cd ..;
 # git checkpoint
 
-./banano-specific-code.sh
-
 ./banano-renaming.sh
+EXIT_CODE_1=$?
+if [ $EXIT_CODE_1 -ne 0 ]; then
+    echo "❌ ./banano-renaming.sh Call FAILED (Exit Code: $EXIT_CODE_1). Exiting script immediately." >&2
+    exit $EXIT_CODE_1
+fi
+
+./banano-specific-code.sh
+EXIT_CODE_1=$?
+if [ $EXIT_CODE_1 -ne 0 ]; then
+    echo "❌ ./banano-specific-code.sh Call FAILED (Exit Code: $EXIT_CODE_1). Exiting script immediately." >&2
+    exit $EXIT_CODE_1
+fi
 
 printf 'doing diff\n'
 
